@@ -1,25 +1,8 @@
 // @flow
 import React from 'react'
-import { Grid } from 'react-bootstrap'
 
-import Jumbotron from './Jumbotron.jsx'
-import Navbar from './Navbar.jsx'
-import Top from './Top.jsx'
-import Price from './Price.jsx'
-import Guides from './Guides.jsx'
-
-type Props = {
-  handleSelectNavItem: Function,
-}
-
-export default ({ handleSelectNavItem }: Props) => (
+export default () => (
   <div>
-    <Jumbotron />
-    <Navbar onSelect={handleSelectNavItem} />
-    <Grid>
-      <Top />
-      <Price />
-      <Guides />
-    </Grid>
+    <button onClick={() => alert('hoge')}>hoge</button>
   </div>
 )
