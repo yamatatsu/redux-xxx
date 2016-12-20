@@ -1,0 +1,14 @@
+parser: babel-eslint
+extends:
+  - airbnb
+  - standard
+plugins:
+  - react
+  - flow-vars
+rules:
+  comma-dangle: [error, always-multiline]
+  no-use-before-define: [error, { functions: false }]
+  flow-vars/define-flow-type: 1
+  flow-vars/use-flow-type: 1
+settings:
+  import/resolver: webpack
