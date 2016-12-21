@@ -1,8 +1,15 @@
 // @flow
 import React from 'react'
 
-export default () => (
+type Props = {
+  fuga: number,
+  handleClick: Function,
+}
+
+export default ({ fuga, handleClick }: Props) => (
   <div>
-    <button onClick={() => alert('hoge')}>hoge</button>
+    <button onClick={handleClick}>hoge</button>
+    <br />
+    <div>fuga: {fuga}</div>
   </div>
 )

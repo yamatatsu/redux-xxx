@@ -1,10 +1,20 @@
 import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 
-import Site from 'containers/Site.jsx'
+import reducer from 'reducer.js'
+import Site from 'containers/Site.js'
 
-render(<Site />, document.getElementById('dom-root'))
+const store = createStore(reducer)
+
+render(
+  <Provider store={store}>
+    <Site />
+  </Provider>,
+  document.getElementById('dom-root')
+)
 
 if (module.hot) {
   module.hot.accept()
