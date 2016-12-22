@@ -1,8 +1,7 @@
 // @flow
 declare module 'react-redux' {
-  declare var connect: (
-    mapStateToProps?: Function,
-    mapDispatchToProps?: (dispatch: Function) => { [key: string]: Function },
-    mergeProps?: Function
-  ) => Function
+  declare var connect: <S, D>(
+    mapStateToProps?: (state: Object) => S,
+    mapDispatchToProps?: (dispatch: Function) => D
+  ) => (component: (props: S & D) => Object) => Object
 }

@@ -1,14 +1,23 @@
 // @flow
 import i from 'icepick'
 
-export type Action = { type: 'tables.add', payload: Array<Array<string>> }
+import type { Action } from 'action.js'
+
+export type State = {
+  fetching: boolean,
+  tables: Array<Array<Array<string>>>,
+}
 
 const initialState = {
+  fetching: false,
   tables: [],
 }
 
-export default (state : Object = initialState, action: Action) => {
+export default (state : State = initialState, action: Action) => {
   switch (action.type) {
+    case 'fetching.set': {
+      return i.setIn(state, ['fetching'], action.payload)
+    }
     case 'tables.add': {
       return i.updateIn(state, ['tables'], tables => i.push(tables, action.payload))
     }

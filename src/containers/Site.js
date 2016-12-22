@@ -5,16 +5,19 @@ import _ from 'lodash'
 
 import Main from 'components/Main.jsx'
 
-import type { Action } from 'reducer.js'
+import type { Action } from 'action.js'
+import type { State } from 'reducer.js'
 
 const BASE_SHEET_ID = '1WsADSxHkAkWU5P8qYXm5BnaeVxZdo5XBhEcGJGiuDFY'
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: State) => ({
+  fetching: state.fetching,
   tables: state.tables,
 })
 
 const mapDispatchToProps = (dispatch: (action: Action) => void) => ({
   handleClick: () => {
+    dispatch({ type: 'fetching.set', payload: true })
     getSheet(BASE_SHEET_ID)
       .then(cells => cells.map(cell => cell.$t))
       .then((ids) => ids.forEach(id => {
@@ -25,7 +28,10 @@ const mapDispatchToProps = (dispatch: (action: Action) => void) => ({
               .map(row => _(row).map(cell => cell.$t).value())
               .value()
           ))
-          .then(table => dispatch({ type: 'tables.add', payload: table }))
+          .then(table => {
+            dispatch({ type: 'tables.add', payload: table })
+            dispatch({ type: 'fetching.set', payload: false })
+          })
       }))
   },
 })

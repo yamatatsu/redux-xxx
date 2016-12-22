@@ -2,13 +2,14 @@
 import React from 'react'
 
 type Props = {
+  fetching: boolean,
   tables: Array<Array<Array<string>>>,
   handleClick: Function,
 }
 
 export default ({ tables, handleClick }: Props) => (
   <div>
-    <button onClick={handleClick}>fetch tables</button>
+    <button onClick={handleClick()}>fetch tables</button>
     <br />
     {tables.map(Table)}
   </div>
