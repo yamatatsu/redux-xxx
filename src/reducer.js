@@ -1,14 +1,16 @@
 // @flow
-export type Action = { type: 'INCREMENT' }
+import i from 'icepick'
+
+export type Action = { type: 'tables.add', payload: Array<Array<string>> }
 
 const initialState = {
-  fuga: 1,
+  tables: [],
 }
 
 export default (state : Object = initialState, action: Action) => {
   switch (action.type) {
-    case 'INCREMENT': {
-      return { fuga: state.fuga + 1 }
+    case 'tables.add': {
+      return i.updateIn(state, ['tables'], tables => i.push(tables, action.payload))
     }
     default: {
       return state
