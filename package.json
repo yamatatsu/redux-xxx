@@ -50,6 +50,9 @@
     "test": "",
     "flow": "$(npm bin)/flow"
   },
+  "moduleRoots": [
+    "src"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yamatatsu/yamatatsu.github.io.git"

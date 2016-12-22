@@ -10,16 +10,21 @@ export default ({ tables, handleClick }: Props) => (
   <div>
     <button onClick={handleClick}>fetch tables</button>
     <br />
-    {tables.map((table, tableIndex) => (
-      <table key={tableIndex}>
-        <tbody>
-          {table.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((data, dataIndex) => <td key={dataIndex}>{data}</td>)}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    ))}
+    {tables.map(Table)}
   </div>
 )
+
+// ===============================
+// 部品
+
+function Table (table, tableIndex) {
+  return <table key={tableIndex}><tbody>{table.map(Row)}</tbody></table>
+}
+
+function Row (row, rowIndex) {
+  return <tr key={rowIndex}>{row.map(Data)}</tr>
+}
+
+function Data (data, dataIndex) {
+  return <td key={dataIndex}>{data}</td>
+}
