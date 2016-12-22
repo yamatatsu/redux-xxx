@@ -5,7 +5,7 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
 import reducer from 'reducer.js'
-import Site from 'containers/Site.js'
+import Site from 'Container.js'
 
 const store = createStore(reducer)
 

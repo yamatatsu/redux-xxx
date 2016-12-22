@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 import _ from 'lodash'
 
-import Main from 'components/Main.jsx'
+import Main from 'Component.jsx'
 
 import type { Action } from 'action.js'
 import type { State } from 'reducer.js'
