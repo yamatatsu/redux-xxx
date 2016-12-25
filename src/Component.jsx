@@ -7,9 +7,9 @@ type Props = {
   handleClick: Function,
 }
 
-export default ({ tables, handleClick }: Props) => (
+export default ({ fetching, tables, handleClick }: Props) => (
   <div>
-    <button onClick={handleClick}>fetch tables</button>
+    <button onClick={handleClick} disabled={fetching}>fetch tables</button>
     <br />
     {tables.map(Table)}
   </div>
