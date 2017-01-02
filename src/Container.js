@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch: (action: Action) => void) => ({
     dispatch({ type: 'fetching.set', payload: true })
     getSheet(BASE_SHEET_ID)
       .then(cells => cells.map(cell => cell.$t))
-      .then((ids) => ids.forEach(id => {
+      .then((ids) => ids.map(id => (
         getSheet(id)
           .then(cells => (
             _(cells)
@@ -30,9 +30,12 @@ const mapDispatchToProps = (dispatch: (action: Action) => void) => ({
           ))
           .then(table => {
             dispatch({ type: 'tables.add', payload: table })
-            dispatch({ type: 'fetching.set', payload: false })
           })
-      }))
+      )))
+      .then(promises => Promise.all(promises))
+      .then(() => {
+        dispatch({ type: 'fetching.set', payload: false })
+      })
   },
 })
 
