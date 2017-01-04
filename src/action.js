@@ -12,17 +12,14 @@ export default {
   handleClick: () => async (dispatch: (action: Action) => void) => {
     dispatch({ type: 'fetching.set', fetching: true })
 
-    try {
-      const ids = await getIds()
-      const promises = ids.map(async id => {
-        const table = await getTable(id)
-        dispatch({ type: 'tables.add', table })
-      })
+    const ids = await getIds()
+    const promises = ids.map(async id => {
+      const table = await getTable(id)
+      dispatch({ type: 'tables.add', table })
+    })
 
-      await Promise.all(promises)
-    } finally {
-      dispatch({ type: 'fetching.set', fetching: false })
-    }
+    await Promise.all(promises)
+    dispatch({ type: 'fetching.set', fetching: false })
   },
 }
 
