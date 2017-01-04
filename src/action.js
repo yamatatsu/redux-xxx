@@ -9,20 +9,20 @@ export type Action =
   { type: 'tables.add', table: Array<Array<string>> }
 
 export default {
-  handleClick: () => (dispatch: (action: Action) => void) => {
+  handleClick: () => async (dispatch: (action: Action) => void) => {
     dispatch({ type: 'fetching.set', fetching: true })
 
-    getIds().then(ids => {
-      const promises = ids.map(id => (
-        getTable(id).then(table => {
-          dispatch({ type: 'tables.add', table })
-        })
-      ))
-
-      Promise.all(promises).then(() => {
-        dispatch({ type: 'fetching.set', fetching: false })
+    try {
+      const ids = await getIds()
+      const promises = ids.map(async id => {
+        const table = await getTable(id)
+        dispatch({ type: 'tables.add', table })
       })
-    })
+
+      await Promise.all(promises)
+    } finally {
+      dispatch({ type: 'fetching.set', fetching: false })
+    }
   },
 }
 
