@@ -1,4 +1,4 @@
 // @flow
 export type Action =
-  { type: 'fetching.set', payload: boolean } |
-  { type: 'tables.add', payload: Array<Array<string>> }
+  { type: 'fetching.set', fetching: boolean } |
+  { type: 'tables.add', table: Array<Array<string>> }

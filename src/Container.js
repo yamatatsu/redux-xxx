@@ -17,29 +17,41 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: (action: Action) => void) => ({
   handleClick: () => {
-    dispatch({ type: 'fetching.set', payload: true })
-    getSheet(BASE_SHEET_ID)
-      .then(cells => cells.map(cell => cell.$t))
-      .then((ids) => ids.map(id => (
-        getSheet(id)
-          .then(cells => (
-            _(cells)
-              .groupBy(cell => cell.row - 1)
-              .map(row => _(row).map(cell => cell.$t).value())
-              .value()
-          ))
-          .then(table => {
-            dispatch({ type: 'tables.add', payload: table })
-          })
-      )))
-      .then(promises => Promise.all(promises))
-      .then(() => {
-        dispatch({ type: 'fetching.set', payload: false })
+    dispatch({ type: 'fetching.set', fetching: true })
+
+    getIds().then(ids => {
+      const promises = ids.map(id => (
+        getTable(id).then(table => {
+          dispatch({ type: 'tables.add', table })
+        })
+      ))
+
+      Promise.all(promises).then(() => {
+        dispatch({ type: 'fetching.set', fetching: false })
       })
+    })
   },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
+
+// ================================
+// 部品
+
+function getIds () {
+  return getSheet(BASE_SHEET_ID)
+    .then(cells => cells.map(cell => cell.$t))
+}
+
+function getTable (id) {
+  return getSheet(id)
+    .then(cells => (
+      _(cells)
+        .groupBy(cell => cell.row - 1)
+        .map(row => _(row).map(cell => cell.$t).value())
+        .value()
+    ))
+}
 
 function getSheet (sheetId) {
   return axios

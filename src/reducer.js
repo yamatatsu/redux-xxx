@@ -15,12 +15,17 @@ const initialState = {
 
 export default (state : State = initialState, action: Action) => {
   switch (action.type) {
+
     case 'fetching.set': {
-      return i.setIn(state, ['fetching'], action.payload)
+      const { fetching } = action
+      return i.setIn(state, ['fetching'], fetching)
     }
+
     case 'tables.add': {
-      return i.updateIn(state, ['tables'], tables => i.push(tables, action.payload))
+      const { table } = action
+      return i.updateIn(state, ['tables'], tables => i.push(tables, table))
     }
+
     default: {
       return state
     }
