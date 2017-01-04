@@ -1,9 +1,7 @@
 // @flow
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import Main from 'Component.jsx'
-import action from 'action.js'
 
 import type { State } from 'reducer.js'
 
@@ -12,6 +10,8 @@ const mapStateToProps = (state: State) => ({
   tables: state.tables,
 })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators(action, dispatch)
+const mapDispatchToProps = (dispatch) => ({
+  handleClick: () => dispatch({ type: 'saga.handleClick' }),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main)
