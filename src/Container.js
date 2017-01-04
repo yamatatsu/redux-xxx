@@ -16,20 +16,18 @@ const mapStateToProps = (state: State) => ({
 })
 
 const mapDispatchToProps = (dispatch: (action: Action) => void) => ({
-  handleClick: () => {
+  handleClick: async () => {
     dispatch({ type: 'fetching.set', fetching: true })
 
-    getIds().then(ids => {
-      const promises = ids.map(id => (
-        getTable(id).then(table => {
-          dispatch({ type: 'tables.add', table })
-        })
-      ))
-
-      Promise.all(promises).then(() => {
-        dispatch({ type: 'fetching.set', fetching: false })
+    try {
+      const ids = await getIds()
+      ids.map(async id => {
+        const table = await getTable(id)
+        dispatch({ type: 'tables.add', table })
       })
-    })
+    } finally {
+      dispatch({ type: 'fetching.set', fetching: false })
+    }
   },
 })
 
